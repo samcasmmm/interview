@@ -19,12 +19,12 @@
    - Rule 3: Drop Non-Dominant Terms
    - Rule 4: Multi-Variable Inputs
 3. [Loop Patterns & Iterative Analysis](#3-loop-patterns--iterative-analysis)
-   - 3.1 Sequential Statements ($O(A + B)$)
-   - 3.2 Simple Loops ($O(n)$)
-   - 3.3 Nested Loops: Independent vs Dependent ($O(n^2)$)
-   - 3.4 Logarithmic Loops: Doubling & Halving ($O(\log n)$)
-   - 3.5 Square Root Loops ($O(\sqrt{n})$)
-   - 3.6 Two-Pointer & Sliding Window Loops ($O(n)$)
+   - 3.1 [Sequential Statements — $O(A + B)$](#31-sequential-statements--oa--b)
+   - 3.2 [Simple Loops — $O(n)$](#32-simple-loops--on)
+   - 3.3 [Nested Loops: Independent vs Dependent — $O(n^2)$](#33-nested-loops-independent-vs-dependent--on2)
+   - 3.4 [Logarithmic Loops: Doubling & Halving — $O(\log n)$](#34-logarithmic-loops-doubling--halving--olog-n)
+   - 3.5 [Square Root Loops — $O(\sqrt{n})$](#35-square-root-loops--osqrtn)
+   - 3.6 [Two-Pointer & Sliding Window Loops — $O(n)$](#36-two-pointer--sliding-window-loops--on)
 4. [Recursive Time Complexity & Recursion Trees](#4-recursive-time-complexity--recursion-trees)
    - 4.1 The Recursion Tree Formula
    - 4.2 Linear Recursion ($O(n)$)
@@ -265,108 +265,167 @@ function compareTwoArrays(a: number[], b: number[]): void {
 
 ## 3. Loop Patterns & Iterative Analysis
 
-### 3.1 Sequential Statements ($O(A + B)$)
-Consecutive code blocks add their runtimes:
+### 3.1 Sequential Statements — $O(A + B)$
+
+- **Spoken as**: *"Big O of A plus B"*
+- **The Addition Rule**: Consecutive independent code blocks add their execution times:
 
 $$\text{Total Time} = \text{Time}(\text{Block 1}) + \text{Time}(\text{Block 2})$$
 
----
-
-### 3.2 Simple Loops ($O(n)$)
-A loop that increments or decrements by a constant amount each step:
-
 ```typescript
-for (let i = 0; i < n; i += 2) {
-  // Runs n / 2 times -> O(n)
-}
-```
+function sequentialExample(arrA: number[], arrB: number[]): void {
+  // Block 1: runs A times -> O(A)
+  for (let i = 0; i < arrA.length; i++) {
+    console.log(arrA[i]);
+  }
 
----
-
-### 3.3 Nested Loops: Independent vs Dependent ($O(n^2)$)
-
-#### Case A: Independent Bounds
-Inner loop count does not depend on outer loop variable:
-
-```typescript
-for (let i = 0; i < n; i++) {
-  for (let j = 0; j < n; j++) {
-    // Runs n * n = n^2 times -> O(n^2)
+  // Block 2: runs B times -> O(B)
+  for (let j = 0; j < arrB.length; j++) {
+    console.log(arrB[j]);
   }
 }
 ```
 
+- **Key Takeaways**:
+  - If inputs are independent ($A$ and $B$), the runtime is **$O(A + B)$**. You *cannot* collapse this to $O(n)$ unless $A = B$.
+  - If both sequential loops iterate over the **same array of size $n$**, the runtime is $O(n) + O(n) = O(2n) \implies \mathbf{O(n)}$ (constants drop).
+
+---
+
+### 3.2 Simple Loops — $O(n)$
+
+- **Spoken as**: *"Big O of n"*
+- **The Linear Step Rule**: Any loop that increases or decreases its counter by a constant step $c$ runs in $O(n)$ time.
+
+```typescript
+// Increment by 1: runs n times -> O(n)
+for (let i = 0; i < n; i++) { /* O(1) work */ }
+
+// Increment by 2: runs n / 2 times -> O(n / 2) -> O(n)
+for (let i = 0; i < n; i += 2) { /* O(1) work */ }
+
+// Decrement by 1: runs n times -> O(n)
+for (let i = n; i > 0; i--) { /* O(1) work */ }
+```
+
+- **Key Insight**: Step increments like `i += 2`, `i += 5`, or `i += 100` divide the iteration count by a constant ($n/100$), but Big-O drops constants: $O(n / 100) \implies \mathbf{O(n)}$.
+
+---
+
+### 3.3 Nested Loops: Independent vs Dependent — $O(n^2)$
+
+- **Spoken as**: *"Big O of n squared"*
+- **The Multiplication Rule**: When loop 2 is nested inside loop 1, multiply their iteration counts.
+
+#### Case A: Independent Bounds ($n \times n$ or $n \times m$)
+The inner loop runs the exact same number of times regardless of the outer loop variable:
+
+```typescript
+for (let i = 0; i < n; i++) {       // Runs n times
+  for (let j = 0; j < n; j++) {     // Runs n times for EACH i
+    console.log(i, j);              // Total executions: n * n = n^2 -> O(n^2)
+  }
+}
+```
+*Multi-variable note*: If the outer loop runs $n$ times and inner loop runs $m$ times, total time is **$O(n \cdot m)$**.
+
 #### Case B: Dependent Bounds (Triangular Loops)
-Inner loop starts at or depends on outer loop variable `i`:
+The inner loop start or end point depends on the outer loop index `i`:
 
 ```typescript
 for (let i = 0; i < n; i++) {
   for (let j = i + 1; j < n; j++) {
-    // Pairwise comparisons
+    // Generates all unique pairs (i, j)
   }
 }
 ```
-How many times does the inner loop run?
-- When $i = 0$: $n - 1$ times
-- When $i = 1$: $n - 2$ times
+
+**Iteration Count Trace**:
+- When $i = 0$, inner loop runs $n - 1$ times.
+- When $i = 1$, inner loop runs $n - 2$ times.
+- When $i = 2$, inner loop runs $n - 3$ times.
 - $\dots$
-- When $i = n - 2$: $1$ time
-- When $i = n - 1$: $0$ times
+- When $i = n - 2$, inner loop runs $1$ time.
+- When $i = n - 1$, inner loop runs $0$ times.
 
-Total operations:
+**Mathematical Sum**:
 
-$$\sum_{k=1}^{n-1} k = \frac{(n - 1)n}{2} = \frac{n^2 - n}{2} \implies \mathbf{O(n^2)}$$
+$$\text{Total Steps} = (n - 1) + (n - 2) + \dots + 2 + 1 + 0 = \sum_{k=1}^{n-1} k = \frac{n(n - 1)}{2} = \frac{n^2 - n}{2} \implies \mathbf{O(n^2)}$$
 
-> **Rule of Thumb**: Any nested loop where the inner loop shrinks or grows linearly by $1$ each outer step runs $\approx \frac{n^2}{2}$ times $\to \mathbf{O(n^2)}$.
+> **Universal Pattern**: Whenever an inner loop shrinks or expands by a constant step ($1, 2, \dots$) relative to outer loop $i$, the total work forms an arithmetic series summing to $\frac{n^2}{2} \implies \mathbf{O(n^2)}$.
 
 ---
 
-### 3.4 Logarithmic Loops: Doubling & Halving ($O(\log n)$)
+### 3.4 Logarithmic Loops: Doubling & Halving — $O(\log n)$
 
-When the loop variable is **multiplied or divided** by a constant factor $c > 1$ each iteration:
+- **Spoken as**: *"Big O of log n"*
+- **The Halving / Doubling Rule**: Whenever a loop multiplies or divides its variable by a constant factor $c > 1$ each iteration, it runs in logarithmic time.
 
 ```typescript
-// Halving:
+// Halving (Division by 2):
 let i = n;
 while (i > 1) {
   i = Math.floor(i / 2);
 }
 
-// Doubling:
+// Doubling (Multiplication by 2):
 for (let j = 1; j < n; j *= 2) {
-  // Iteration values: 1, 2, 4, 8, 16, ..., 2^k
+  // j takes values: 1, 2, 4, 8, 16, 32, ..., 2^k
 }
 ```
 
-How many steps $k$ until $2^k \ge n$?
+#### Step-by-Step Mathematical Walkthrough
+For doubling (`j *= 2`), at iteration $k$, the value of $j$ is $2^k$. The loop terminates when:
 
-$$2^k = n \implies k = \log_2 n \implies \mathbf{O(\log n)}$$
+$$2^k \ge n \implies k = \log_2 n \implies \mathbf{O(\log n)}$$
 
-Whenever the problem space is halved at each step, think **$O(\log n)$**.
+| Iteration ($k$) | Value of $j$ | Remaining Distance to $n$ |
+| :---: | :---: | :---: |
+| 0 | $2^0 = 1$ | $n - 1$ |
+| 1 | $2^1 = 2$ | $n - 2$ |
+| 2 | $2^2 = 4$ | $n - 4$ |
+| 3 | $2^3 = 8$ | $n - 8$ |
+| $k$ | $2^k = n$ | $0 \implies k = \log_2 n$ |
+
+> **Does the Logarithm Base Matter in Big-O?**
+> **No.** If a loop triples (`j *= 3`), it takes $\log_3 n$ steps. By the logarithmic change of base formula:
+> $$\log_3 n = \frac{\log_2 n}{\log_2 3} = \frac{1}{\log_2 3} \cdot \log_2 n \approx 0.63 \cdot \log_2 n$$
+> Since $0.63$ is a constant multiplier, it drops in Big-O: $\mathbf{O(\log_3 n) = O(\log_2 n) = O(\log n)}$.
 
 ---
 
-### 3.5 Square Root Loops ($O(\sqrt{n})$)
+### 3.5 Square Root Loops — $O(\sqrt{n})$
 
-When the loop termination condition depends on $i \cdot i \le n$:
+- **Spoken as**: *"Big O of square root n"*
+- **The Termination Condition Rule**: When loop termination is governed by $i \cdot i \le n$ (or $i \le \sqrt{n}$):
 
 ```typescript
 function isPrime(n: number): boolean {
   if (n <= 1) return false;
+  // Loop condition: i * i <= n is equivalent to i <= Math.sqrt(n)
   for (let i = 2; i * i <= n; i++) {
     if (n % i === 0) return false;
   }
   return true;
 }
 ```
-The loop runs while $i \le \sqrt{n}$.
-Total steps $= \sqrt{n} - 1 \implies \mathbf{O(\sqrt{n})}$.
+
+#### Why Does This Run in $O(\sqrt{n})$?
+- $i$ starts at $2$ and increments by $1$: $2, 3, 4, 5, \dots$
+- The loop stops when $i^2 > n \implies i > \sqrt{n}$.
+- Total iterations: $\sqrt{n} - 1 \implies \mathbf{O(\sqrt{n})}$.
+
+#### Why Do Factor / Prime Tests Only Need to Go Up to $\sqrt{n}$?
+If a number $n$ has factors $a \times b = n$, both factors cannot simultaneously be greater than $\sqrt{n}$:
+- If $a > \sqrt{n}$ and $b > \sqrt{n}$, then $a \times b > \sqrt{n} \times \sqrt{n} = n$ (a mathematical impossibility!).
+- Therefore, at least one factor **must be $\le \sqrt{n}$**. If you check all integers up to $\sqrt{n}$ and find no divisors, $n$ is guaranteed prime.
 
 ---
 
-### 3.6 Two-Pointer & Sliding Window Loops ($O(n)$)
+### 3.6 Two-Pointer & Sliding Window Loops — $O(n)$
 
-A very common interview pattern that looks like $O(n^2)$ at first glance because of a loop inside a loop, but is actually **$O(n)$**:
+- **Spoken as**: *"Big O of n"*
+- **The Amortized Pointer Rule**: A nested `while` loop inside a `for` loop does **not** necessarily mean $O(n^2)$. If inner pointers only move forward and never reset backwards, the overall time is **$O(n)$**.
 
 ```typescript
 function lengthOfLongestSubstring(s: string): number {
@@ -374,10 +433,12 @@ function lengthOfLongestSubstring(s: string): number {
   let left = 0;
   let maxLen = 0;
 
+  // Outer loop: right pointer sweeps from 0 to n - 1
   for (let right = 0; right < s.length; right++) {
+    // Inner while loop: left pointer only moves forward!
     while (seen.has(s[right])) {
       seen.delete(s[left]);
-      left++; // Left pointer advances
+      left++;
     }
     seen.add(s[right]);
     maxLen = Math.max(maxLen, right - left + 1);
@@ -386,11 +447,25 @@ function lengthOfLongestSubstring(s: string): number {
 }
 ```
 
-**Why is this $O(n)$ and NOT $O(n^2)$?**
-- `right` starts at 0 and increments at most $n$ times.
-- `left` starts at 0 and increments at most $n$ times across the entire execution.
-- Total pointer movements across the whole algorithm: $\le 2n$.
-- Therefore, the amortized time is $\mathbf{O(n)}$.
+```
+Visual Pointer Sweep:
+String:   [ a , b , c , a , b , c , b , b ]
+Indices:    0   1   2   3   4   5   6   7
+
+Step 1: left = 0, right = 0 -> 'a'
+Step 2: left = 0, right = 1 -> 'b'
+Step 3: left = 0, right = 2 -> 'c'
+Step 4: duplicate 'a'! left advances 0 -> 1.
+Total movements of `right`: exactly n steps.
+Total movements of `left`: at most n steps.
+Combined pointer movements: <= 2n steps.
+```
+
+#### Why is this $O(n)$ and NOT $O(n^2)$?
+1. The `right` pointer increments by 1 in each step of the outer loop $\implies$ exactly $n$ increments.
+2. The `left` pointer **never resets back to 0**. It only increments forward $\implies$ at most $n$ total increments across the entire runtime.
+3. Every character is added to `seen` at most once and deleted from `seen` at most once.
+4. Total operations $= n \text{ (right increments)} + n \text{ (left increments)} = 2n \implies \mathbf{O(n)}$.
 
 ---
 
