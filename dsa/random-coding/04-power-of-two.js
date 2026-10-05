@@ -16,3 +16,23 @@ function powerOfTwo(n) {
 // console.log(powerOfTwo(2));  // true (2^1)
 // console.log(powerOfTwo(5));  // false
 // console.log(powerOfTwo(16)); // true (2^4)
+
+// recursive solution
+/**
+ * Calculates the power of a non-negative integer n using recursion (n^2).
+ *
+ * Time Complexity:  O(2^n) — "Big O of 2 to the power n" (exponential time)
+ * Space Complexity: O(n) — "Big O of n" (due to recursion stack depth)
+ *
+ * @param {number} n - Non-negative integer
+ * @returns {number} Power of n
+ */
+
+function powerOfTwoRecursive(n) {
+  if (n <= 0) return false;
+  if (n === 1) return true;
+  if (n % 2 !== 0) return false;
+  return powerOfTwoRecursive(n / 2);
+}
+
+// console.log(powerOfTwoRecursive(16)); // true
