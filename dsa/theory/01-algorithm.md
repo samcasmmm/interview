@@ -53,13 +53,13 @@
 
 Asymptotic notation measures how an algorithm's runtime or memory scales as the input size $n$ approaches infinity. It ignores hardware-specific constants and low-order terms.
 
-| Notation | Formal Definition | Intuition | Interview Translation |
-| :--- | :--- | :--- | :--- |
-| **Big-O ($O$)** | $f(n) \le c \cdot g(n)$ for $n \ge n_0$ | **Upper Bound** | "Will take **at most** this much time/space" (Guaranteed ceiling) |
-| **Big-Omega ($\Omega$)** | $f(n) \ge c \cdot g(n)$ for $n \ge n_0$ | **Lower Bound** | "Will take **at least** this much time/space" (Best-case floor) |
-| **Big-Theta ($\Theta$)** | $c_1 \cdot g(n) \le f(n) \le c_2 \cdot g(n)$ | **Tight Bound** | "Grows at **exactly** this rate" (Upper and lower match) |
-| **Little-o ($o$)** | $\lim_{n \to \infty} \frac{f(n)}{g(n)} = 0$ | **Strict Upper** | Grows strictly slower than $g(n)$ (e.g., $2n = o(n^2)$) |
-| **Little-omega ($\omega$)** | $\lim_{n \to \infty} \frac{f(n)}{g(n)} = \infty$ | **Strict Lower** | Grows strictly faster than $g(n)$ (e.g., $n^2 = \omega(n)$) |
+| Notation | Read Out Loud As | Formal Definition | Intuition | Interview Translation |
+| :--- | :--- | :--- | :--- | :--- |
+| **Big-O ($O$)** | *"Big O of..."* | $f(n) \le c \cdot g(n)$ for $n \ge n_0$ | **Upper Bound** | "Will take **at most** this much time/space" (Guaranteed ceiling) |
+| **Big-Omega ($\Omega$)** | *"Big Omega of..."* | $f(n) \ge c \cdot g(n)$ for $n \ge n_0$ | **Lower Bound** | "Will take **at least** this much time/space" (Best-case floor) |
+| **Big-Theta ($\Theta$)** | *"Big Theta of..."* | $c_1 \cdot g(n) \le f(n) \le c_2 \cdot g(n)$ | **Tight Bound** | "Grows at **exactly** this rate" (Upper and lower match) |
+| **Little-o ($o$)** | *"Little o of..."* | $\lim_{n \to \infty} \frac{f(n)}{g(n)} = 0$ | **Strict Upper** | Grows strictly slower than $g(n)$ (e.g., $2n = o(n^2)$) |
+| **Little-omega ($\omega$)** | *"Little omega of..."* | $\lim_{n \to \infty} \frac{f(n)}{g(n)} = \infty$ | **Strict Lower** | Grows strictly faster than $g(n)$ (e.g., $n^2 = \omega(n)$) |
 
 ```
 Growth Curves:
@@ -79,19 +79,27 @@ f(n)
 
 ---
 
-### 1.2 Complexity Growth Hierarchy
+### 1.2 Complexity Growth Hierarchy & Spoken Guide
 
 From fastest to slowest:
 
 $$O(1) < O(\log \log n) < O(\log n) < O(\sqrt{n}) < O(n) < O(n \log n) < O(n^2) < O(n^3) < O(2^n) < O(n!) < O(n^n)$$
 
-- **$O(1)$**: Hash table lookup, array indexing, basic math.
-- **$O(\log n)$**: Binary search, balanced BST lookup, Euclidean GCD.
-- **$O(n)$**: Single pass over array, linear search, tree traversal.
-- **$O(n \log n)$**: Optimal comparison sorting (MergeSort, HeapSort).
-- **$O(n^2)$**: Bubble sort, nested loops, brute-force pair comparisons.
-- **$O(2^n)$**: Generating all subsets, naive recursive Fibonacci.
-- **$O(n!)$**: Generating all permutations (Traveling Salesperson brute force).
+#### How to Read & Speak Complexities in Interviews
+
+| Complexity | Read Out Loud As | Common Name | Typical Example |
+| :--- | :--- | :--- | :--- |
+| **$O(1)$** | **"Big O of one"** | Constant | Hash map lookup, array indexing, basic arithmetic |
+| **$O(\log \log n)$** | **"Big O of log log n"** | Double logarithmic | Interpolation search (uniform data), Van Emde Boas tree |
+| **$O(\log n)$** | **"Big O of log n"** | Logarithmic | Binary search, balanced BST lookup, Euclidean GCD |
+| **$O(\sqrt{n})$** | **"Big O of square root n"** | Sub-linear / Sqrt | Primality testing by trial division up to $\sqrt{n}$ |
+| **$O(n)$** | **"Big O of n"** | Linear | Single pass over array, linear search, tree traversal |
+| **$O(n \log n)$** | **"Big O of n log n"** | Linearithmic / Quasilinear | MergeSort, HeapSort, QuickSort (average case) |
+| **$O(n^2)$** | **"Big O of n squared"** | Quadratic | Nested loops, bubble sort, pair comparisons |
+| **$O(n^3)$** | **"Big O of n cubed"** | Cubic | Floyd-Warshall all-pairs shortest paths, naive matrix multiplication |
+| **$O(2^n)$** | **"Big O of two to the n"** | Exponential | Generating all subsets, naive recursive Fibonacci |
+| **$O(n!)$** | **"Big O of n factorial"** | Factorial | Generating all permutations, Traveling Salesperson brute force |
+| **$O(n^n)$** | **"Big O of n to the n"** | Hyper-exponential | Enumerating all possible assignments/functions from $n$ to $n$ items |
 
 ---
 
