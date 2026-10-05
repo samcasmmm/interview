@@ -20,8 +20,8 @@ function factorialNumber(n) {
 /**
  * Calculates the factorial of a non-negative integer n using recursion (n!).
  *
- * Time Complexity:  O(2^n) — "Big O of 2 to the power n" (exponential time)
- * Space Complexity: O(n) — "Big O of n" (due to recursion stack depth)
+ * Time Complexity:  O(n) — "Big O of n" (linear recursive chain of n frames)
+ * Space Complexity: O(n) — "Big O of n" (call stack depth up to n)
  *
  * @param {number} n - Non-negative integer
  * @returns {number} Factorial of n

@@ -21,8 +21,8 @@ function powerOfTwo(n) {
 /**
  * Calculates the power of a non-negative integer n using recursion (n^2).
  *
- * Time Complexity:  O(2^n) — "Big O of 2 to the power n" (exponential time)
- * Space Complexity: O(n) — "Big O of n" (due to recursion stack depth)
+ * Time Complexity:  O(log n) — "Big O of log n" (input n is halved each recursive call)
+ * Space Complexity: O(log n) — "Big O of log n" (call stack depth is log2(n))
  *
  * @param {number} n - Non-negative integer
  * @returns {number} Power of n
