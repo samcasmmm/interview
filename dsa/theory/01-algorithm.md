@@ -3,177 +3,51 @@
 > A clear, intuitive, and exhaustive theoretical reference for technical interviews. Designed to make complex concepts simple to grasp without omitting critical mathematical foundations, edge cases, or implementation mechanics.
 
 ---
+> 💡 **Complexity Foundations**: For Big-O asymptotic analysis ($O, \Omega, \Theta, o, \omega$), spoken guides, amortized analysis (Banker's/Potential methods), Master Theorem, and memory internals, see [**02-time-space-complexity.md**](./02-time-space-complexity.md).
+
+---
 
 ## 📑 Table of Contents
 
-1. [Asymptotic Analysis & Mathematical Foundations](#1-asymptotic-analysis--mathematical-foundations)
-   - 1.1 Asymptotic Notations ($O, \Omega, \Theta, o, \omega$)
-   - 1.2 Complexity Growth Hierarchy
-   - 1.3 Amortized Complexity Analysis (Aggregate, Accounting, Potential)
-   - 1.4 Master Theorem for Divide-and-Conquer
-2. [Searching & Binary Search Variations](#2-searching--binary-search-variations)
-   - 2.1 The Core Mental Model: Monotonic Predicates
-   - 2.2 Standard Templates (Exact Match, Lower Bound, Upper Bound)
-   - 2.3 Binary Search on Answer Space (Min-Max Optimization)
-3. [Sorting Algorithms (Comparison & Non-Comparison)](#3-sorting-algorithms)
-   - 3.1 Master Comparison Table
-   - 3.2 QuickSort Deep Dive (Lomuto vs Hoare vs 3-Way Partitioning)
-   - 3.3 MergeSort Mechanics & Linked List Advantage
-   - 3.4 Why Building a Binary Heap is $O(n)$
-   - 3.5 Non-Comparison Sorts (Counting, Radix, Bucket)
-4. [Algorithmic Paradigms](#4-algorithmic-paradigms)
-   - 4.1 Divide & Conquer
-   - 4.2 Greedy Algorithms & Proof Techniques (Stays Ahead, Exchange Argument)
-   - 4.3 Backtracking vs DFS vs Branch-and-Bound
-5. [Dynamic Programming (DP) Deep Dive](#5-dynamic-programming-dp-deep-dive)
-   - 5.1 Memoization (Top-Down) vs Tabulation (Bottom-Up)
-   - 5.2 The 5-Step DP Framework
-   - 5.3 Knapsack Patterns: 0/1 Knapsack vs Unbounded Knapsack
-   - 5.4 Longest Increasing Subsequence (LIS): $O(n^2)$ vs $O(n \log n)$
-6. [Graph Algorithms](#6-graph-algorithms)
-   - 6.1 Graph Representations (List vs Matrix vs Edge List)
-   - 6.2 Traversals (BFS, DFS, 0-1 BFS)
-   - 6.3 Topological Sort & Cycle Detection (Kahn's vs DFS 3-Coloring)
-   - 6.4 Shortest Path Algorithms (Dijkstra, Bellman-Ford, Floyd-Warshall)
-   - 6.5 Minimum Spanning Tree (MST: Kruskal vs Prim) & DSU
-7. [String Search & Pattern Matching](#7-string-search--pattern-matching)
-   - 7.1 Knuth-Morris-Pratt (KMP) & The LPS Array
-   - 7.2 Rabin-Karp Rolling Hash
-   - 7.3 Trie (Prefix Tree) Fundamentals
-8. [Bit Manipulation & Mathematical Algorithms](#8-bit-manipulation--mathematical-algorithms)
-   - 8.1 Bitwise Operations Cheat Sheet & Clever Tricks
-   - 8.2 Number Theory (Euclidean GCD, Sieve of Eratosthenes, Fast Modular Exponentiation)
-9. [Algorithm Selection Decision Tree & Interview Cheat Sheet](#9-algorithm-selection-decision-tree--interview-cheat-sheet)
+1. [Searching & Binary Search Variations](#1-searching--binary-search-variations)
+   - 1.1 The Core Mental Model: Monotonic Predicates
+   - 1.2 Standard Templates (Exact Match, Lower Bound, Upper Bound)
+   - 1.3 Binary Search on Answer Space (Min-Max Optimization)
+2. [Sorting Algorithms (Comparison & Non-Comparison)](#2-sorting-algorithms)
+   - 2.1 Master Comparison Table
+   - 2.2 QuickSort Deep Dive (Lomuto vs Hoare vs 3-Way Partitioning)
+   - 2.3 MergeSort Mechanics & Linked List Advantage
+   - 2.4 Why Building a Binary Heap is $O(n)$
+   - 2.5 Non-Comparison Sorts (Counting, Radix, Bucket)
+3. [Algorithmic Paradigms](#3-algorithmic-paradigms)
+   - 3.1 Divide & Conquer
+   - 3.2 Greedy Algorithms & Proof Techniques (Stays Ahead, Exchange Argument)
+   - 3.3 Backtracking vs DFS vs Branch-and-Bound
+4. [Dynamic Programming (DP) Deep Dive](#4-dynamic-programming-dp-deep-dive)
+   - 4.1 Memoization (Top-Down) vs Tabulation (Bottom-Up)
+   - 4.2 The 5-Step DP Framework
+   - 4.3 Knapsack Patterns: 0/1 Knapsack vs Unbounded Knapsack
+   - 4.4 Longest Increasing Subsequence (LIS): $O(n^2)$ vs $O(n \log n)$
+5. [Graph Algorithms](#5-graph-algorithms)
+   - 5.1 Graph Representations (List vs Matrix vs Edge List)
+   - 5.2 Traversals (BFS, DFS, 0-1 BFS)
+   - 5.3 Topological Sort & Cycle Detection (Kahn's vs DFS 3-Coloring)
+   - 5.4 Shortest Path Algorithms (Dijkstra, Bellman-Ford, Floyd-Warshall)
+   - 5.5 Minimum Spanning Tree (MST: Kruskal vs Prim) & DSU
+6. [String Search & Pattern Matching](#6-string-search--pattern-matching)
+   - 6.1 Knuth-Morris-Pratt (KMP) & The LPS Array
+   - 6.2 Rabin-Karp Rolling Hash
+   - 6.3 Trie (Prefix Tree) Fundamentals
+7. [Bit Manipulation & Mathematical Algorithms](#7-bit-manipulation--mathematical-algorithms)
+   - 7.1 Bitwise Operations Cheat Sheet & Clever Tricks
+   - 7.2 Number Theory (Euclidean GCD, Sieve of Eratosthenes, Fast Modular Exponentiation)
+8. [Algorithm Selection Decision Tree & Interview Traps](#8-algorithm-selection-decision-tree--interview-traps)
 
 ---
 
-## 1. Asymptotic Analysis & Mathematical Foundations
+## 1. Searching & Binary Search Variations
 
-### 1.1 Asymptotic Notations
-
-Asymptotic notation measures how an algorithm's runtime or memory scales as the input size $n$ approaches infinity. It ignores hardware-specific constants and low-order terms.
-
-| Notation | Read Out Loud As | Formal Definition | Intuition | Interview Translation |
-| :--- | :--- | :--- | :--- | :--- |
-| **Big-O ($O$)** | *"Big O of..."* | $f(n) \le c \cdot g(n)$ for $n \ge n_0$ | **Upper Bound** | "Will take **at most** this much time/space" (Guaranteed ceiling) |
-| **Big-Omega ($\Omega$)** | *"Big Omega of..."* | $f(n) \ge c \cdot g(n)$ for $n \ge n_0$ | **Lower Bound** | "Will take **at least** this much time/space" (Best-case floor) |
-| **Big-Theta ($\Theta$)** | *"Big Theta of..."* | $c_1 \cdot g(n) \le f(n) \le c_2 \cdot g(n)$ | **Tight Bound** | "Grows at **exactly** this rate" (Upper and lower match) |
-| **Little-o ($o$)** | *"Little o of..."* | $\lim_{n \to \infty} \frac{f(n)}{g(n)} = 0$ | **Strict Upper** | Grows strictly slower than $g(n)$ (e.g., $2n = o(n^2)$) |
-| **Little-omega ($\omega$)** | *"Little omega of..."* | $\lim_{n \to \infty} \frac{f(n)}{g(n)} = \infty$ | **Strict Lower** | Grows strictly faster than $g(n)$ (e.g., $n^2 = \omega(n)$) |
-
-```
-Growth Curves:
-f(n)
- ^
- |             c * g(n)  [Big-O Upper Bound]
- |           /
- |       f(n)            [Actual runtime function]
- |         /
- |      c' * g(n)        [Big-Omega Lower Bound]
- |
- +-------------------------> n
-               n0 (threshold where relationship holds forever)
-```
-
-> **Interview Distinction**: Engineers colloquially say "Big-O" when they mean the tight bound $\Theta$. If an interviewer asks: *"Is QuickSort $O(n^3)$?"* The technical answer is **yes** ($O(n^3)$ is a valid upper bound), but its tight worst-case bound is $\Theta(n^2)$. Always clarify whether you are reporting average-case tight bound ($\Theta$) or worst-case ceiling ($O$).
-
----
-
-### 1.2 Complexity Growth Hierarchy & Spoken Guide
-
-From fastest to slowest:
-
-$$O(1) < O(\log \log n) < O(\log n) < O(\sqrt{n}) < O(n) < O(n \log n) < O(n^2) < O(n^3) < O(2^n) < O(n!) < O(n^n)$$
-
-#### How to Read & Speak Complexities in Interviews
-
-| Complexity | Read Out Loud As | Common Name | Typical Example |
-| :--- | :--- | :--- | :--- |
-| **$O(1)$** | **"Big O of one"** | Constant | Hash map lookup, array indexing, basic arithmetic |
-| **$O(\log \log n)$** | **"Big O of log log n"** | Double logarithmic | Interpolation search (uniform data), Van Emde Boas tree |
-| **$O(\log n)$** | **"Big O of log n"** | Logarithmic | Binary search, balanced BST lookup, Euclidean GCD |
-| **$O(\sqrt{n})$** | **"Big O of square root n"** | Sub-linear / Sqrt | Primality testing by trial division up to $\sqrt{n}$ |
-| **$O(n)$** | **"Big O of n"** | Linear | Single pass over array, linear search, tree traversal |
-| **$O(n \log n)$** | **"Big O of n log n"** | Linearithmic / Quasilinear | MergeSort, HeapSort, QuickSort (average case) |
-| **$O(n^2)$** | **"Big O of n squared"** | Quadratic | Nested loops, bubble sort, pair comparisons |
-| **$O(n^3)$** | **"Big O of n cubed"** | Cubic | Floyd-Warshall all-pairs shortest paths, naive matrix multiplication |
-| **$O(2^n)$** | **"Big O of two to the n"** | Exponential | Generating all subsets, naive recursive Fibonacci |
-| **$O(n!)$** | **"Big O of n factorial"** | Factorial | Generating all permutations, Traveling Salesperson brute force |
-| **$O(n^n)$** | **"Big O of n to the n"** | Hyper-exponential | Enumerating all possible assignments/functions from $n$ to $n$ items |
-
----
-
-### 1.3 Amortized Complexity Analysis
-
-Amortized analysis guarantees the **average cost per operation over a worst-case sequence** of operations.
-
-> **Difference from Average Case**:
-> - **Average-case**: Relies on probabilistic assumptions about inputs (e.g., random data).
-> - **Amortized**: Deterministic guarantee over any valid sequence of operations, even if adversarial.
-
-#### The Three Classic Methods
-
-1. **Aggregate Method**:
-   Compute the total cost of all $k$ operations in the sequence $T(k)$, then compute the average:
-   $$T_{\text{amortized}} = \frac{T(k)}{k}$$
-
-2. **Accounting Method (Banker's Method)**:
-   - Assign an artificial "charge" (amortized cost) to each operation.
-   - Cheap operations are overcharged; the excess is stored as "credit" on elements in the data structure.
-   - Expensive operations consume the saved credit to pay for their true cost.
-   - As long as the total credit balance never drops below zero, the assigned charges represent valid upper bounds.
-
-3. **Potential Method (Physicist's Method)**:
-   - Define a potential function $\Phi(S)$ representing stored energy in data structure state $S$, where $\Phi(S) \ge \Phi(S_0)$ for all states.
-   - Amortized cost for operation $i$: $a_i = c_i + \Phi(S_i) - \Phi(S_{i-1})$ (true cost $+$ change in potential).
-
-#### Concrete Example: Dynamic Array (ArrayList / std::vector) Doubling
-
-- When the array reaches capacity $N$, it allocates a new array of size $2N$ and copies all $N$ elements.
-- **True cost of $N$ insertions**:
-  - $N$ direct writes into empty slots: cost $= N$.
-  - Resizing copies occur at sizes $1, 2, 4, 8, \dots, N$:
-    $$\text{Total copies} = 1 + 2 + 4 + \dots + N = 2N - 1 < 2N$$
-  - Total cost for $N$ appends = $N + 2N = 3N$.
-  - **Amortized cost per append** = $\frac{3N}{N} = O(1)$.
-
-```
-Banker's Credit Intuition:
-Charge 3 coins per push:
-- Coin 1: Pays for the immediate insert.
-- Coin 2: Saved on this element to pay for moving itself during the next resize.
-- Coin 3: Saved on this element to pay for moving an older element that has already spent its credit.
-Result: When the array doubles, every element has exactly enough credit to fund the copy. Balance never drops below zero!
-```
-
----
-
-### 1.4 Master Theorem for Divide-and-Conquer
-
-Solves recurrence relations of the form:
-
-$$T(n) = a \cdot T\left(\frac{n}{b}\right) + f(n)$$
-
-Where:
-- $a \ge 1$: Number of subproblems in each step.
-- $b > 1$: Factor by which input size is divided.
-- $f(n) = \Theta(n^c)$: Work done outside recursion (dividing and combining).
-
-#### The 3-Case Comparison Rule
-
-Compare the work at the leaves, $n^{\log_b a}$, with the work at the root, $f(n)$:
-
-| Case | Condition | Intuition | Resulting Complexity $T(n)$ | Classic Example |
-| :---: | :--- | :--- | :---: | :--- |
-| **Case 1** | $f(n) = O(n^{\log_b a - \epsilon})$ for $\epsilon > 0$ | **Leaves dominate** (tree is bottom-heavy) | $\Theta(n^{\log_b a})$ | Strassen's Matrix Mult: $T(n) = 7T(n/2) + O(n^2) \implies \Theta(n^{\log_2 7}) \approx \Theta(n^{2.81})$ |
-| **Case 2** | $f(n) = \Theta(n^{\log_b a} \log^k n)$ for $k \ge 0$ | **Work is balanced** across all levels | $\Theta(n^{\log_b a} \log^{k+1} n)$ | MergeSort: $T(n) = 2T(n/2) + \Theta(n) \implies \Theta(n \log n)$ ($k=0$)<br>Binary Search: $T(n) = T(n/2) + \Theta(1) \implies \Theta(\log n)$ |
-| **Case 3** | $f(n) = \Omega(n^{\log_b a + \epsilon})$ for $\epsilon > 0$ (and regularity: $a f(n/b) \le c f(n)$) | **Root dominates** (tree is top-heavy) | $\Theta(f(n))$ | $T(n) = 2T(n/2) + \Theta(n^2) \implies \Theta(n^2)$ |
-
----
-
-## 2. Searching & Binary Search Variations
-
-### 2.1 The Core Mental Model: Monotonic Predicates
+### 1.1 The Core Mental Model: Monotonic Predicates
 
 Binary search is **not** limited to sorted arrays. It applies to **any search space that can be mapped to a monotonic boolean condition**:
 
@@ -188,7 +62,7 @@ If $P(x) = \text{true} \implies P(x+1) = \text{true}$, we can find the transitio
 
 ---
 
-### 2.2 Standard Templates
+### 1.2 Standard Templates
 
 To avoid infinite loops and off-by-one errors:
 
@@ -256,7 +130,7 @@ function upperBound(nums: number[], target: number): number {
 
 ---
 
-### 2.3 Binary Search on Answer Space (Min-Max Optimization)
+### 1.3 Binary Search on Answer Space (Min-Max Optimization)
 
 Whenever a problem asks for:
 - "Find the **minimum** capacity/speed/cost to achieve X"
@@ -290,9 +164,9 @@ function binarySearchOnAnswer(minPossible: number, maxPossible: number): number 
 
 ---
 
-## 3. Sorting Algorithms
+## 2. Sorting Algorithms
 
-### 3.1 Master Comparison Table
+### 2.1 Master Comparison Table
 
 | Algorithm | Best Time | Average Time | Worst Time | Space | Stable? | In-Place? | When to Use |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :--- |
@@ -308,7 +182,7 @@ function binarySearchOnAnswer(minPossible: number, maxPossible: number): number 
 
 ---
 
-### 3.2 QuickSort Deep Dive
+### 2.2 QuickSort Deep Dive
 
 #### Lomuto vs Hoare Partitioning
 - **Lomuto**: Pivot at end. Single forward scanner and boundary pointer. Performs $\approx 3\times$ more swaps than Hoare. Degrades to $O(n^2)$ if all elements are identical.
@@ -359,7 +233,7 @@ function threeWayQuickSort(nums: number[], low = 0, high = nums.length - 1): voi
 
 ---
 
-### 3.3 MergeSort Mechanics & Linked List Advantage
+### 2.3 MergeSort Mechanics & Linked List Advantage
 
 MergeSort splits an array into halves, recursively sorts them, and merges two sorted lists.
 - **Why MergeSort for Linked Lists?**
@@ -369,7 +243,7 @@ MergeSort splits an array into halves, recursively sorts them, and merges two so
 
 ---
 
-### 3.4 Why Building a Binary Heap is $O(n)$
+### 2.4 Why Building a Binary Heap is $O(n)$
 
 Building a heap by calling `insert` $n$ times is $O(n \log n)$. However, bottom-up `buildHeap` (heapifying from $\lfloor n/2 \rfloor$ down to 0) takes linear time $O(n)$.
 
@@ -385,7 +259,7 @@ Building a heap by calling `insert` $n$ times is $O(n \log n)$. However, bottom-
 
 ---
 
-### 3.5 Non-Comparison Sorts
+### 2.5 Non-Comparison Sorts
 
 Comparison-based sorting has a proven mathematical lower bound of $\Omega(n \log n)$ (decision tree of $n!$ leaves has height $\ge \log_2(n!) \approx n \log_2 n$). Non-comparison sorts bypass this by exploiting data properties:
 
@@ -395,9 +269,9 @@ Comparison-based sorting has a proven mathematical lower bound of $\Omega(n \log
 
 ---
 
-## 4. Algorithmic Paradigms
+## 3. Algorithmic Paradigms
 
-### 4.1 Divide & Conquer
+### 3.1 Divide & Conquer
 
 1. **Divide**: Break the problem into non-overlapping subproblems of the same type.
 2. **Conquer**: Solve subproblems recursively (base case if small enough).
@@ -412,7 +286,7 @@ Runs in **$O(\log b)$** multiplications.
 
 ---
 
-### 4.2 Greedy Algorithms & Proof Techniques
+### 3.2 Greedy Algorithms & Proof Techniques
 
 A greedy algorithm makes the locally optimal choice at each step without ever backtracking.
 
@@ -435,7 +309,7 @@ Greedy requires two mathematical properties:
 
 ---
 
-### 4.3 Backtracking vs DFS vs Branch-and-Bound
+### 3.3 Backtracking vs DFS vs Branch-and-Bound
 
 - **DFS**: Exhaustive traversal of a graph or tree. Explores until leaf, then retreats.
 - **Backtracking**: DFS applied to state-space trees with **pruning**. If a partial state cannot possibly lead to a valid solution, immediately prune that branch (e.g., N-Queens, Sudoku).
@@ -443,7 +317,7 @@ Greedy requires two mathematical properties:
 
 ---
 
-## 5. Dynamic Programming (DP) Deep Dive
+## 4. Dynamic Programming (DP) Deep Dive
 
 DP solves optimization and counting problems with:
 1. **Overlapping Subproblems**: The same subproblems are solved repeatedly.
@@ -451,7 +325,7 @@ DP solves optimization and counting problems with:
 
 ---
 
-### 5.1 Memoization (Top-Down) vs Tabulation (Bottom-Up)
+### 4.1 Memoization (Top-Down) vs Tabulation (Bottom-Up)
 
 | Metric | Top-Down (Memoization) | Bottom-Up (Tabulation) |
 | :--- | :--- | :--- |
@@ -462,7 +336,7 @@ DP solves optimization and counting problems with:
 
 ---
 
-### 5.2 The 5-Step DP Framework
+### 4.2 The 5-Step DP Framework
 
 Every interview DP problem can be solved systematically:
 1. **Define the State**: What variables uniquely define a subproblem? (e.g., $dp[i][w] = \text{max value using items } 0..i-1 \text{ with capacity } w$).
@@ -473,7 +347,7 @@ Every interview DP problem can be solved systematically:
 
 ---
 
-### 5.3 Knapsack Patterns: 0/1 vs Unbounded
+### 4.3 Knapsack Patterns: 0/1 vs Unbounded
 
 The core difference is whether each item can be used **once** or **infinitely many times**. Notice how loop direction controls element reuse:
 
@@ -517,7 +391,7 @@ function knapsackUnbounded(weights: number[], values: number[], W: number): numb
 
 ---
 
-### 5.4 Longest Increasing Subsequence (LIS): $O(n^2)$ vs $O(n \log n)$
+### 4.4 Longest Increasing Subsequence (LIS): $O(n^2)$ vs $O(n \log n)$
 
 - **Standard DP ($O(n^2)$)**:
   $dp[i]$ = length of LIS ending at index $i$.
@@ -533,9 +407,9 @@ function knapsackUnbounded(weights: number[], values: number[], W: number): numb
 
 ---
 
-## 6. Graph Algorithms
+## 5. Graph Algorithms
 
-### 6.1 Graph Representations
+### 5.1 Graph Representations
 
 | Representation | Space | Add Edge | Query Edge $(u, v)$ | Iterate Outgoing Neighbors | Best For |
 | :--- | :---: | :---: | :---: | :---: | :--- |
@@ -545,7 +419,7 @@ function knapsackUnbounded(weights: number[], values: number[], W: number): numb
 
 ---
 
-### 6.2 Traversals: BFS, DFS, and 0-1 BFS
+### 5.2 Traversals: BFS, DFS, and 0-1 BFS
 
 - **Breadth-First Search (BFS)**:
   - Uses a **FIFO Queue**.
@@ -563,7 +437,7 @@ function knapsackUnbounded(weights: number[], values: number[], W: number): numb
 
 ---
 
-### 6.3 Topological Sort & Cycle Detection
+### 5.3 Topological Sort & Cycle Detection
 
 Valid only on **Directed Acyclic Graphs (DAGs)**.
 
@@ -581,7 +455,7 @@ Valid only on **Directed Acyclic Graphs (DAGs)**.
 
 ---
 
-### 6.4 Shortest Path Algorithms Comparison
+### 5.4 Shortest Path Algorithms Comparison
 
 | Algorithm | Edge Weights | Directed / Undirected | Time Complexity | Space | Core Mechanism |
 | :--- | :--- | :--- | :---: | :---: | :--- |
@@ -597,7 +471,7 @@ Valid only on **Directed Acyclic Graphs (DAGs)**.
 
 ---
 
-### 6.5 Minimum Spanning Tree (MST) & Disjoint Set Union (DSU)
+### 5.5 Minimum Spanning Tree (MST) & Disjoint Set Union (DSU)
 
 An MST connects all $V$ vertices with $V-1$ edges while minimizing the total edge weight.
 
@@ -652,9 +526,9 @@ class DSU {
 
 ---
 
-## 7. String Search & Pattern Matching
+## 6. String Search & Pattern Matching
 
-### 7.1 Knuth-Morris-Pratt (KMP) & The LPS Array
+### 6.1 Knuth-Morris-Pratt (KMP) & The LPS Array
 
 Naive string search rewinds the text pointer after a mismatch ($O(n \cdot m)$ worst case). KMP searches in **$O(n + m)$** by preprocessing the pattern into a Longest Prefix Suffix (**LPS**) array.
 
@@ -682,7 +556,7 @@ Set j = 2 and compare next!
 
 ---
 
-### 7.2 Rabin-Karp Rolling Hash
+### 6.2 Rabin-Karp Rolling Hash
 
 Instead of character-by-character comparison:
 1. Compute hash of pattern $P$ of length $m$.
@@ -696,7 +570,7 @@ Instead of character-by-character comparison:
 
 ---
 
-### 7.3 Trie (Prefix Tree) Fundamentals
+### 6.3 Trie (Prefix Tree) Fundamentals
 
 A tree data structure where each node represents a character. Used for dictionary lookups, prefix autocompletion, and IP routing.
 - **Search & Insert**: $O(L)$ where $L$ is the length of the word (independent of the number of words stored).
@@ -704,9 +578,9 @@ A tree data structure where each node represents a character. Used for dictionar
 
 ---
 
-## 8. Bit Manipulation & Mathematical Algorithms
+## 7. Bit Manipulation & Mathematical Algorithms
 
-### 8.1 Bitwise Operations Cheat Sheet
+### 7.1 Bitwise Operations Cheat Sheet
 
 | Goal | Operation | Explanation |
 | :--- | :--- | :--- |
@@ -721,7 +595,7 @@ A tree data structure where each node represents a character. Used for dictionar
 
 ---
 
-### 8.2 Number Theory & Math
+### 7.2 Number Theory & Math
 
 #### Euclidean Algorithm for GCD
 $$\gcd(a, b) = \gcd(b, a \bmod b) \quad \text{with base case } \gcd(a, 0) = a$$
@@ -751,9 +625,9 @@ function sieveOfEratosthenes(n: number): boolean[] {
 
 ---
 
-## 9. Algorithm Selection Decision Tree & Interview Cheat Sheet
+## 8. Algorithm Selection Decision Tree & Interview Traps
 
-### 9.1 Decision Tree
+### 8.1 Decision Tree
 
 ```mermaid
 graph TD
@@ -773,24 +647,11 @@ graph TD
     Start -->|String pattern matching| KMP[KMP / Rabin-Karp / Trie]
 ```
 
----
-
-### 9.2 Constraints-to-Complexity Cheat Sheet
-
-Use the input size $N$ from the problem statement to deduce the required time complexity before writing any code:
-
-| Input Size $N$ | Maximum Allowable Complexity | Likely Paradigms |
-| :--- | :---: | :--- |
-| **$N \le 10$** | $O(N!)$ or $O(N^2 \cdot 2^N)$ | Generating permutations, Traveling Salesperson, Bitmask DP |
-| **$N \le 20$** | $O(2^N)$ | Subset generation, Backtracking, Meet-in-the-middle |
-| **$N \le 100$** | $O(N^4)$ or $O(N^3)$ | Floyd-Warshall, 3D Dynamic Programming |
-| **$N \le 1,000$** | $O(N^2)$ | 2D DP, Nested loops, all-pairs comparisons |
-| **$N \le 10^5$ to $10^6$** | $O(N \log N)$ or $O(N)$ | Sorting, Binary Search, Heaps, Sliding Window, Monotonic Stack, Two Pointers |
-| **$N \ge 10^9$** | $O(\log N)$ or $O(1)$ | Binary Search on Answer, Fast Exponentiation, Math / Matrix Exponentiation |
+> 📊 **Input Constraints vs. Time Complexity**: Refer to [02-time-space-complexity.md §9.2](./02-time-space-complexity.md#92-the-rule-of-108-hardware-reality) for the full "Rule of $10^8$ ops/sec" lookup table.
 
 ---
 
-### 9.3 Top Interview Pitfalls & How to Avoid Them
+### 8.2 Top Interview Algorithmic Pitfalls & How to Avoid Them
 
 1. **Integer Overflow in Mid Calculation**:
    Always write `mid = left + Math.floor((right - left) / 2)` instead of `(left + right) / 2`.
