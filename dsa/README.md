@@ -6,7 +6,7 @@ A structured roadmap for DSA interview preparation covering fundamental theory, 
 
 ## 📂 Subdirectories
 
-- [**Theory & Fundamentals**](./theory/README.md) — Big-O notation, data structure internals, sorting & searching mechanics.
+- [**Theory & Fundamentals**](./theory/README.md) — Big-O, Master Theorem, data structure internals, and [**01-algorithm.md**](./theory/01-algorithm.md) (Algorithms Master Guide).
 - [**Coding Patterns**](./patterns/README.md) — The 15 essential templates (Two Pointers, Sliding Window, Monotonic Stack, Backtracking, Graphs).
 - [**LeetCode Practice**](./leetcode/README.md) — Curated problems classified by difficulty (Easy, Medium, Hard) and high-frequency question sets.
 - [**Random Coding Challenges**](./random-coding/README.md) — Real-world interview screening puzzles, data transformations, and custom data structure implementations.

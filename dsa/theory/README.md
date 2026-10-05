@@ -2,10 +2,13 @@
 
 Core computer science foundations, asymptotic analysis, and data structure internals.
 
-## Topics
-- **Asymptotic Analysis**: Big-O, Big-Ω, Big-Θ, amortized complexity
-- **Linear Data Structures**: Arrays, Dynamic Arrays, Singly/Doubly Linked Lists, Stacks, Queues, Deques
-- **Non-Linear Data Structures**: Trees, Binary Search Trees (BST), AVL Trees, Red-Black Trees, Heaps/Priority Queues, Tries
-- **Hashing**: Hash functions, collision resolution (chaining vs open addressing), load factors
-- **Graphs**: Representation (adjacency matrix vs list), DAGs, bipartite graphs, union-find / disjoint set union (DSU)
-- **Sorting & Searching**: QuickSort, MergeSort, HeapSort, Binary Search variations
+## 📖 Deep-Dive Guides
+- [**01-algorithm.md**](./01-algorithm.md) — Comprehensive Algorithms Master Guide (Asymptotic analysis, Master Theorem, amortized complexity, search/sort mechanics, DP state reduction, graph shortest paths, MST, and decision trees).
+
+## 🎯 Core Topics
+- **Asymptotic Analysis**: Big-O, Big-Ω, Big-Θ, amortized analysis (Aggregate, Accounting, Potential)
+- **Searching & Sorting**: Binary search on answer space, QuickSort partitioning (Lomuto vs Hoare vs 3-way), TimSort, HeapSort $O(n)$ build heap
+- **Algorithmic Paradigms**: Divide & Conquer, Greedy proofs (Exchange argument), Dynamic Programming (Memoization vs Tabulation, space compression)
+- **Graph Algorithms**: BFS/0-1 BFS, Dijkstra, Bellman-Ford, Floyd-Warshall, Kruskal (DSU) vs Prim
+- **String Algorithms**: Knuth-Morris-Pratt (KMP & LPS array), Rabin-Karp rolling hash
+- **Data Structure Internals**: Arrays, Linked Lists, BSTs, AVL/Red-Black, Heaps, Hash Tables, Tries
