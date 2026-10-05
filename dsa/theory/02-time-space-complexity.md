@@ -7,46 +7,46 @@
 ## 📑 Table of Contents
 
 1. [The Core Mental Model](#1-the-core-mental-model)
-   - 1.1 What is Big O Notation?
-   - 1.2 Time Complexity & Core Classes ($O(1), O(\log n), O(n), O(n^2), O(n^3)$)
-   - 1.3 Space Complexity & Memory Scaling
-   - 1.4 Operations vs Clock Time (Why Asymptotics Matter)
-   - 1.5 Auxiliary Space vs Total Space
-   - 1.6 How to Read & Speak Complexities Out Loud
+   - 1.1 [What is Big O Notation?](#11-what-is-big-o-notation)
+   - 1.2 [Time Complexity & Core Classes](#12-time-complexity--core-classes)
+   - 1.3 [Space Complexity & Memory Scaling](#13-space-complexity--memory-scaling)
+   - 1.4 [Operations vs Clock Time (Why Asymptotics Matter)](#14-operations-vs-clock-time-why-asymptotics-matter)
+   - 1.5 [Auxiliary Space vs Total Space](#15-auxiliary-space-vs-total-space)
+   - 1.6 [How to Read & Speak Complexities Out Loud](#16-how-to-read--speak-complexities-out-loud)
 2. [The 4 Golden Rules of Big-O Calculation](#2-the-4-golden-rules-of-big-o-calculation)
-   - Rule 1: Worst-Case Guarantee
-   - Rule 2: Drop the Constants
-   - Rule 3: Drop Non-Dominant Terms
-   - Rule 4: Multi-Variable Inputs
+   - 2.1 [Rule 1: Worst-Case Guarantee](#rule-1-worst-case-guarantee)
+   - 2.2 [Rule 2: Drop the Constants](#rule-2-drop-the-constants)
+   - 2.3 [Rule 3: Drop Non-Dominant Terms](#rule-3-drop-non-dominant-terms)
+   - 2.4 [Rule 4: Multi-Variable Inputs](#rule-4-multi-variable-inputs)
 3. [Loop Patterns & Iterative Analysis](#3-loop-patterns--iterative-analysis)
-   - 3.1 [Sequential Statements — $O(A + B)$](#31-sequential-statements--oa--b)
-   - 3.2 [Simple Loops — $O(n)$](#32-simple-loops--on)
-   - 3.3 [Nested Loops: Independent vs Dependent — $O(n^2)$](#33-nested-loops-independent-vs-dependent--on2)
-   - 3.4 [Logarithmic Loops: Doubling & Halving — $O(\log n)$](#34-logarithmic-loops-doubling--halving--olog-n)
-   - 3.5 [Square Root Loops — $O(\sqrt{n})$](#35-square-root-loops--osqrtn)
-   - 3.6 [Two-Pointer & Sliding Window Loops — $O(n)$](#36-two-pointer--sliding-window-loops--on)
+   - 3.1 [Sequential Statements — O(A + B)](#31-sequential-statements--oa--b)
+   - 3.2 [Simple Loops — O(n)](#32-simple-loops--on)
+   - 3.3 [Nested Loops: Independent vs Dependent — O(n²)](#33-nested-loops-independent-vs-dependent--on2)
+   - 3.4 [Logarithmic Loops: Doubling & Halving — O(log n)](#34-logarithmic-loops-doubling--halving--olog-n)
+   - 3.5 [Square Root Loops — O(√n)](#35-square-root-loops--osqrtn)
+   - 3.6 [Two-Pointer & Sliding Window Loops — O(n)](#36-two-pointer--sliding-window-loops--on)
 4. [Recursive Time Complexity & Recursion Trees](#4-recursive-time-complexity--recursion-trees)
-   - 4.1 The Recursion Tree Formula
-   - 4.2 Linear Recursion ($O(n)$)
-   - 4.3 Branching Recursion without Memoization ($O(2^n)$)
-   - 4.4 Divide & Conquer (Merge Sort $O(n \log n)$)
-   - 4.5 Master Theorem Cheat Sheet
+   - 4.1 [The Recursion Tree Formula](#41-the-recursion-tree-formula)
+   - 4.2 [Linear Recursion — O(n)](#42-linear-recursion-on)
+   - 4.3 [Branching Recursion without Memoization — O(2ⁿ)](#43-branching-recursion-without-memoization-o2n)
+   - 4.4 [Divide & Conquer: Merge Sort — O(n log n)](#44-divide--conquer-merge-sort-on-log-n)
+   - 4.5 [Master Theorem Cheat Sheet](#45-master-theorem-cheat-sheet)
 5. [Space Complexity & Memory Internals](#5-space-complexity--memory-internals)
-   - 5.1 Stack Memory vs Heap Memory
-   - 5.2 Call Stack Depth in Recursion
-   - 5.3 In-Place vs Out-of-Place
-   - 5.4 Hidden Memory Allocations (Strings, Slices, Pass-by-Value)
+   - 5.1 [Stack Memory vs Heap Memory](#51-stack-memory-vs-heap-memory)
+   - 5.2 [Call Stack Depth in Recursion](#52-call-stack-depth-in-recursion)
+   - 5.3 [In-Place vs Out-of-Place](#53-in-place-vs-out-of-place)
+   - 5.4 [Hidden Memory Allocations](#54-hidden-memory-allocations)
 6. [Amortized Complexity Analysis Demystified](#6-amortized-complexity-analysis-demystified)
-   - 6.1 What is Amortized Complexity?
-   - 6.2 The Three Proof Methods (Aggregate, Banker's, Potential)
-   - 6.3 Classic Case 1: Dynamic Array Resizing
-   - 6.4 Classic Case 2: Queue Implemented via Two Stacks
+   - 6.1 [What is Amortized Complexity?](#61-what-is-amortized-complexity)
+   - 6.2 [The Three Proof Methods](#62-the-three-proof-methods)
+   - 6.3 [Classic Case 1: Dynamic Array Resizing](#63-classic-case-1-dynamic-array-resizing)
+   - 6.4 [Classic Case 2: Queue Implemented via Two Stacks](#64-classic-case-2-queue-implemented-via-two-stacks)
 7. [Hidden Traps & Common Interview Mistakes](#7-hidden-traps--common-interview-mistakes)
-   - Trap 1: String Concatenation in Loops ($O(n^2)$)
-   - Trap 2: Array Prepending (`shift` / `insert(0)`)
-   - Trap 3: Passing Arrays to Recursive Calls
-   - Trap 4: Substring & Slicing Operations
-   - Trap 5: Hash Map Worst-Case Collision
+   - 7.1 [Trap 1: String Concatenation in Loops](#trap-1-string-concatenation-in-loops-on2)
+   - 7.2 [Trap 2: Array Prepending](#trap-2-array-prepending-shift--unshift--insert0)
+   - 7.3 [Trap 3: Passing Arrays to Recursive Calls](#trap-3-passing-arrays-to-recursive-calls)
+   - 7.4 [Trap 4: Substring & Slicing Operations](#trap-4-substring--slicing-operations)
+   - 7.5 [Trap 5: Hash Map Worst-Case Collision](#trap-5-hash-map-worst-case-collision)
 8. [Practical Code Drills (10 Real-World Interview Snippets)](#8-practical-code-drills)
 9. [Interview Self-Check Framework & Constraints Guide](#9-interview-self-check-framework--constraints-guide)
 
