@@ -66,21 +66,21 @@
 
 **Time complexity** is determined by counting **how many times statements execute** based on the input size $n$, rather than measuring absolute clock running time.
 
-- **Constant Time ($O(1)$)**:
+- **Constant Time** — $O(1)$:
   - *Read as*: "Big O of one"
   - *Meaning*: Execution time does not change regardless of input size (e.g., a single arithmetic operation, accessing an array element by index).
-- **Logarithmic Time ($O(\log n)$)**:
+- **Logarithmic Time** — $O(\log n)$:
   - *Read as*: "Big O of log n"
   - *Meaning*: The problem size is divided by a constant factor (usually cut in half) in every iteration (e.g., Binary Search).
-- **Linear Time ($O(n)$)**:
+- **Linear Time** — $O(n)$:
   - *Read as*: "Big O of n"
   - *Meaning*: Operations grow directly in proportion to input size (e.g., a single loop over $n$ items).
   - *Simplification rule*: If an algorithm takes $n + 2$ steps, the constant $+2$ is ignored because it becomes insignificant as $n$ grows. Thus, it simplifies to $O(n)$.
-- **Quadratic Time ($O(n^2)$)**:
+- **Quadratic Time** — $O(n^2)$:
   - *Read as*: "Big O of n squared"
   - *Meaning*: Nested loops where every element interacts with every other element.
   - *Simplification rule*: Even if the exact count is $3n^2 + 5n + 1$, we drop the less dominant terms and coefficients and keep only the highest-order term: $O(n^2)$.
-- **Cubic Time ($O(n^3)$)**:
+- **Cubic Time** — $O(n^3)$:
   - *Read as*: "Big O of n cubed"
   - *Meaning*: Three nested loops (e.g., naive matrix multiplication, all triplets).
 
@@ -90,15 +90,22 @@
 
 **Space complexity** measures the extra memory an algorithm needs relative to the input size $n$.
 
-- **Constant Space ($O(1)$)**:
-  - Extra memory does not depend on input size (e.g., a few tracking pointers, in-place sorting).
-- **Linear Space ($O(n)$)**:
-  - Extra memory grows proportionally with input size (e.g., allocating a new array, creating a frequency hash map of all elements).
-- **Logarithmic Space ($O(\log n)$)**:
-  - Extra memory grows, but far slower than the input size (e.g., recursion call stack of a balanced divide-and-conquer algorithm like MergeSort tree or QuickSort stack).
-- **Quadratic Space ($O(n^2)$)**:
-  - Allocating an $n \times n$ 2D matrix or graph adjacency matrix.
-  - > ⚠️ **Interview Note**: Quadratic space complexity ($O(n^2)$) consumes massive RAM for large $n$ (for $n = 10^5$, $n^2$ integers = 40 GB) and is generally something to actively optimize or avoid.
+- **Constant Space** — $O(1)$:
+  - *Read as*: "Big O of one"
+  - *Meaning*: Extra memory does not depend on input size.
+  - *Example*: A few tracking pointer variables, in-place array reversing or sorting.
+- **Logarithmic Space** — $O(\log n)$:
+  - *Read as*: "Big O of log n"
+  - *Meaning*: Extra memory grows, but far slower than the input size.
+  - *Example*: Recursion call stack of balanced divide-and-conquer algorithms (e.g., MergeSort tree or balanced QuickSort recursion).
+- **Linear Space** — $O(n)$:
+  - *Read as*: "Big O of n"
+  - *Meaning*: Extra memory grows proportionally with input size.
+  - *Example*: Allocating a new result array, creating a frequency hash map of all elements.
+- **Quadratic Space** — $O(n^2)$:
+  - *Read as*: "Big O of n squared"
+  - *Meaning*: Allocating a full 2D matrix ($n \times n$) or graph adjacency matrix.
+  - > ⚠️ **Interview Note**: Quadratic space complexity ($O(n^2)$) consumes massive RAM for large $n$ (for $n = 10^5$, $n^2$ 4-byte integers = 40 GB) and is generally something to actively optimize or avoid.
 
 ---
 
